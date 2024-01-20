@@ -1,4 +1,6 @@
 import sys
+import vec3
+import color
 
 def main():
     image_width = 256
@@ -15,11 +17,8 @@ def main():
             g = float(j) / (image_height - 1)
             b = 0
 
-            ir = int(255.999 * r)
-            ig = int(255.999 * g)
-            ib = int(255.999 * b)
-
-            print(f"{ir} {ig} {ib}")
+            pixel_color = color.Color(r, g, b)
+            color.write_color(pixel_color)
     
     print(f"\rDone.                    ", file=sys.stderr, flush=True)
     
