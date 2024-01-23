@@ -3,7 +3,18 @@ import vec3
 import color
 import ray
 
+def hit_sphere(center, radius, r):
+    oc = r.origin() - center
+    a = vec3.dot(r.direction(), r.direction())
+    b = 2.0 * vec3.dot(oc, r.direction())
+    c = vec3.dot(oc, oc) - radius * radius
+    discriminant = b * b - 4 * a * c
+    return (discriminant >= 0)
+
 def ray_color(r):
+    if (hit_sphere(vec3.Point3(0, 0, -1), 0.5, r)):
+        return color.Color(1, 0, 0)
+
     unit_direction = vec3.unit_vector(r.direction())
     a = 0.5 * (unit_direction.y() + 1.0)
     return (1-a) * color.Color(1.0, 1.0, 1.0) + a * color.Color(0.5, 0.7, 1.0)
