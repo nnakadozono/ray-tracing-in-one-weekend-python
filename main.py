@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 import vec3
 import color
 import ray
@@ -9,11 +10,17 @@ def hit_sphere(center, radius, r):
     b = 2.0 * vec3.dot(oc, r.direction())
     c = vec3.dot(oc, oc) - radius * radius
     discriminant = b * b - 4 * a * c
-    return (discriminant >= 0)
+
+    if discriminant < 0:
+        return -1.0
+    else:
+        return (-b - np.sqrt(discriminant)) / (2.0 * a)
 
 def ray_color(r):
-    if (hit_sphere(vec3.Point3(0, 0, -1), 0.5, r)):
-        return color.Color(1, 0, 0)
+    t = hit_sphere(vec3.Point3(0, 0, -1), 0.5, r)
+    if t > 0.0:
+        N = vec3.unit_vector(r.at(t) - vec3.Point3(0, 0, -1))
+        return 0.5 * color.Color(N.x()+1, N.y()+1, N.z()+1)
 
     unit_direction = vec3.unit_vector(r.direction())
     a = 0.5 * (unit_direction.y() + 1.0)
