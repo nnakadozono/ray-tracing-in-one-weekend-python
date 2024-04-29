@@ -1,20 +1,24 @@
 import sys
 import numpy as np
+import rtweekend
 import vec3
 import color
 import ray
+import hittable
+import hittable_list
+import sphere
 
 def hit_sphere(center, radius, r):
     oc = r.origin() - center
-    a = vec3.dot(r.direction(), r.direction())
-    b = 2.0 * vec3.dot(oc, r.direction())
-    c = vec3.dot(oc, oc) - radius * radius
-    discriminant = b * b - 4 * a * c
+    a = r.direction().length_squared()
+    h = vec3.dot(r.direction(), oc)
+    c = oc.length_squared() - radius * radius
+    discriminant = h * h - a * c
 
     if discriminant < 0:
         return -1.0
     else:
-        return (-b - np.sqrt(discriminant)) / (2.0 * a)
+        return (h - np.sqrt(discriminant)) / a
 
 def ray_color(r):
     t = hit_sphere(vec3.Point3(0, 0, -1), 0.5, r)
