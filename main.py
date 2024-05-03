@@ -7,10 +7,11 @@ import ray
 import hittable
 import hittable_list
 import sphere
+import interval
 
 def ray_color(r, world):
     rec = hittable.HitRecord()
-    if world.hit(r, 0, rtweekend.INFINITY, rec):
+    if world.hit(r, interval.Interval(0, rtweekend.INFINITY), rec):
         return 0.5 * (rec.normal + color.Color(1.0, 1.0, 1.0))
 
     unit_direction = vec3.unit_vector(r.direction())

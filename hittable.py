@@ -20,5 +20,5 @@ class HitRecord:
         object.front_face = self.front_face
         
 class Hittable:
-    def hit(self, r, ray_tmin, ray_tmax, rec):
+    def hit(self, r, ray_t, rec):
         return None

@@ -7,7 +7,7 @@ class Sphere(Hittable):
         self.__center = center
         self.__radius = radius
 
-    def hit(self, r, ray_tmin, ray_tmax, rec):
+    def hit(self, r, ray_t, rec):
         oc = self.__center - r.origin()
         a = r.direction().length_squared()
         h = vec3.dot(r.direction(), oc)
@@ -21,9 +21,9 @@ class Sphere(Hittable):
 
         # Find the nearest root that lies in the acceptable range.
         root = (h - sqrtd) / a
-        if (root <= ray_tmin) or (ray_tmax <= root):
+        if not ray_t.surrounds(root):
             root = (h + sqrtd) / a
-            if (root <= ray_tmin) or (ray_tmax <= root):
+            if not ray_t.surrounds(root):
                 return False
             
         rec.t = root
