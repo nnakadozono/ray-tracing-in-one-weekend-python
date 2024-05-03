@@ -1,18 +1,19 @@
-import hittable
+from hittable import Hittable, HitRecord
 
-class hisstable_list(hittable):
+class Hittable_list(Hittable):
     def __init__(self, object=None):
-        self.add(object)
         self.__objects = []
+        self.add(object)
         
     def clear(self):
         self.__objects = []
 
     def add(self, object):
-        self.__objects.append(object)
+        if object is not None:
+            self.__objects.append(object)
 
     def hit(self, r, ray_tmin, ray_tmax, rec):
-        temp_rec = hittable.hit_record()
+        temp_rec = HitRecord()
         hit_anything = False
         closest_so_far = ray_tmax
 
@@ -20,7 +21,7 @@ class hisstable_list(hittable):
             if object.hit(r, ray_tmin, closest_so_far, temp_rec):
                 hit_anything = True
                 closest_so_far = temp_rec.t
-                rec = temp_rec
+                temp_rec.copy_to(rec)
 
         return hit_anything
 

@@ -1,8 +1,8 @@
 import numpy as np
-from hittable import hittable
+from hittable import Hittable
 import vec3
 
-class sphere(hittable):
+class Sphere(Hittable):
     def __init__(self, center, radius):
         self.__center = center
         self.__radius = radius
